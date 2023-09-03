@@ -15,38 +15,47 @@ export default function TextForm(props) {
 
   function handleUpperCaseClick() {
     setText(text.toUpperCase());
-    props.setAlert({
-      type: "success",
-      msg: "Text Converted to upper case",
-    });
-    setTimeout(removeAlert, 2000);
+    if (text.length > 0) {
+      props.setAlert({
+        type: "success",
+        msg: "Text Converted to upper case",
+      });
+      setTimeout(removeAlert, 2000);
+    }
   }
 
   function handleLowerCaseClick() {
     setText(text.toLowerCase());
-    props.setAlert({
-      type: "success",
-      msg: "Text Converted to lower case",
-    });
-    setTimeout(removeAlert, 2000);
+
+    if (text.length > 0) {
+      props.setAlert({
+        type: "success",
+        msg: "Text Converted to lower case",
+      });
+      setTimeout(removeAlert, 2000);
+    }
   }
 
   function copyText() {
     navigator.clipboard.writeText(text);
-    props.setAlert({
-      type: "success",
-      msg: "Text copied",
-    });
-    setTimeout(removeAlert, 2000);
+    if (text.length > 0) {
+      props.setAlert({
+        type: "success",
+        msg: "Text copied",
+      });
+      setTimeout(removeAlert, 2000);
+    }
   }
 
   function handleExtraSpaces() {
     let newText = text.replace(/\s{2,}/g, " ");
     setText(newText);
-    props.setAlert({
-      type: "success",
-      msg: "Extra spaces removed",
-    });
+    if (newText.length > 0) {
+      props.setAlert({
+        type: "success",
+        msg: "Extra spaces removed",
+      });
+    }
     setTimeout(removeAlert, 2000);
   }
   return (
@@ -62,27 +71,45 @@ export default function TextForm(props) {
         style={{
           height: "200px",
           color: props.mode === "dark" ? "white" : "#343a40",
-          backgroundColor: props.mode === "dark" ? "grey" : "white",
+          backgroundColor: props.mode === "dark" ? "#13466e" : "white",
         }}
         value={text}
         onChange={handleChange}
       ></textarea>
       <button
-        className="btn btn-primary my-3 mx-2"
+        className={`btn btn-${
+          props.mode === "dark" ? "outline-light" : "dark"
+        } my-3 mx-2`}
         onClick={handleUpperCaseClick}
+        disabled={text.length === 0}
       >
         Convert Uppercase
       </button>
       <button
-        className="btn btn-primary my-3 mx-2"
+        className={`btn btn-${
+          props.mode === "dark" ? "outline-light" : "dark"
+        } my-3 mx-2`}
         onClick={handleLowerCaseClick}
+        disabled={text.length === 0}
       >
         Convert Lowercase
       </button>
-      <button className="btn btn-primary my-3 mx-2" onClick={copyText}>
+      <button
+        className={`btn btn-${
+          props.mode === "dark" ? "outline-light" : "dark"
+        } my-3 mx-2`}
+        onClick={copyText}
+        disabled={text.length === 0}
+      >
         Copy Text
       </button>
-      <button className="btn btn-primary my-3 mx-2" onClick={handleExtraSpaces}>
+      <button
+        className={`btn btn-${
+          props.mode === "dark" ? "outline-light" : "dark"
+        } my-3 mx-2`}
+        onClick={handleExtraSpaces}
+        disabled={text.length === 0}
+      >
         Handle Extra Spaces
       </button>
       <TextSummary text={text} mode={props.mode} />
